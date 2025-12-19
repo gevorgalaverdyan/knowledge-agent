@@ -20,7 +20,7 @@ client = genai.Client(api_key=api_key)
 if len(sys.argv) < 2:
     raise SystemExit("Usage: python ask_tfsa.py \"your question\"")
 
-query = sys.argv[1]
+user_query = sys.argv[1]
 
 # --------------------
 # Load FAISS + metadata
@@ -37,23 +37,23 @@ assert index.ntotal == len(metadata), "FAISS index / metadata mismatch"
 # Retrieval
 # --------------------
 
-def search(query: str, top_k: int = 5):
-    query_vec = embed_query(query, client)
+def search(search_query: str, top_k: int = 5):
+    query_vec = embed_query(search_query, client)
     faiss.normalize_L2(query_vec)
 
     scores, indices = index.search(query_vec, top_k)
 
-    results = []
+    search_results = []
     for score, idx in zip(scores[0], indices[0]):
         if idx == -1:
             continue
 
-        results.append({
+        search_results.append({
             "score": float(score),
             **metadata[idx]
         })
 
-    return results
+    return search_results
 
 # --------------------
 # Prompting
@@ -70,7 +70,7 @@ def build_context(chunks):
         )
     return "\n\n".join(blocks)
 
-def ask(context: str, question: str):
+def ask(context_text: str, question: str):
     prompt = f"""
     You are a regulatory knowledge assistant specializing in Canadian federal tax guidance.
 
@@ -95,7 +95,7 @@ def ask(context: str, question: str):
     Always include a "Sources" section listing the CRA sections used.
 
     Context:
-    {context}
+    {context_text}
 
     Question:
     {question}
@@ -112,11 +112,11 @@ def ask(context: str, question: str):
 # Run
 # --------------------
 
-results = search(query)
+RESULTS = search(user_query)
 
-if not results:
+if not RESULTS:
     print("No relevant CRA sections found.")
     sys.exit(0)
 
-context = build_context(results)
-ask(context, query)
+CONTEXT = build_context(RESULTS)
+ask(CONTEXT, user_query)
