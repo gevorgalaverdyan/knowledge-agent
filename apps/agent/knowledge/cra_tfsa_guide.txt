@@ -1,0 +1,143 @@
+[Find out if this guide is for you]
+This guide is for individuals who have opened or who are considering opening a tax-free savings account (TFSA). It gives general information on this investment opportunity including who is eligible to open a TFSA, what the contribution limits are, possible tax situations, non-resident implications, transfers on marriage or relationship breakdown, what happens when a TFSA holder dies, and various other topics. For more information on the TFSA, go to Tax-Free Savings Account.
+
+This guide does not deal with every tax situation. It is not intended to cover all possible situations or to replace professional financial, tax, or estate planning services.
+
+As with other important investment decisions, you should speak with your financial advisor or a representative at your financial institution to be sure you are aware of any conditions, limitations, or administrative fees that can apply.
+
+We have included definitions of some of the terms used in this guide in the Definitions section. You may want to read this before you start.
+
+[TFSA dollar limit]
+The annual TFSA dollar limit for 2025 is $7,000. The annual dollar limit is indexed to inflation.
+
+[What is a TFSA]
+The TFSA program began in 2009. It is a way for individuals who are 18 years of age or older and who have a valid social insurance number (SIN) to set money aside tax-free throughout their lifetime.
+
+Contributions to a TFSA are not deductible for income tax purposes. Any amount contributed as well as any income earned in the account (for example, investment income and capital gains) is generally tax-free, even when it is withdrawn.
+
+Administrative or other fees in relation to a TFSA and any interest on money borrowed to contribute to a TFSA are not tax-deductible.
+
+[Types of TFSAs]
+There are three types of TFSAs that can be offered: a deposit, an annuity contract, and an arrangement in trust.
+
+Banks, insurance companies, credit unions, and trust companies can all issue TFSAs.
+
+For more information about a certain type of TFSA, contact a TFSA issuer.
+
+[Who can open a TFSA]
+Any individual that is a resident of Canada who has a valid SIN and who is 18 years of age or older is eligible to open a TFSA.
+
+Any individual that is a non-resident of Canada who has a valid SIN and who is 18 years of age or older is also eligible to open a TFSA. However, any contributions made while a non-resident will be subject to a 1% tax for each month the contribution stays in the account. For more information, refer to “Non-residents of Canada”.
+
+You cannot open a TFSA or contribute to one until you turn 18. However, when you turn 18, you will be able to contribute up to the full TFSA dollar limit for that year.
+
+Example 
+Julie turns 18 on May 13, 2025. She will not be able to open and contribute to a TFSA until that date. However, from May 13, 2025, she can open a TFSA and contribute up to the full 2025 TFSA dollar limit.
+
+Note
+In certain provinces and territories, the legal age at which an individual can enter into a contract (which includes opening a TFSA) is 19. In this case, when the individual turns 19 and is able to enter into a contract in that jurisdiction, the TFSA contribution room for the year an individual turns 18 is carried over to the following year.
+
+[How to open a TFSA]
+You can have more than one TFSA at any given time, but the total amount you contribute to your TFSAs cannot be more than your available TFSA contribution room for that year.
+
+To open a TFSA, you must do both of the following:
+
+Contact your financial institution, credit union, or insurance company (issuer).
+Provide the issuer with your SIN and date of birth so the issuer can register your qualifying arrangement as a TFSA. Your issuer could ask for supporting documents.
+
+Note
+If you do not provide this information or provide incorrect information to your issuer, the registration of your TFSA can be denied. If your TFSA is not registered, any income that is earned will have to be reported on your income tax and benefit return.
+
+[Self-directed TFSA]
+You can set up a self-directed TFSA if you prefer to build and manage your own investment portfolio by buying and selling different types of investments. For more information, contact a TFSA issuer.
+
+[Contributions] 
+You do not need to have earned income to contribute to a TFSA. The maximum amount that you can contribute to your TFSA is limited by your TFSA contribution room.
+
+All TFSA contributions made during the year, including the replacement or re-contribution of withdrawals made from a TFSA, will count against your contribution room.
+
+Note
+Qualifying transfers, exempt contributions and specified distributions are not considered in the calculation of contribution room.
+
+At any time in the year, if you contribute more than your available TFSA contribution room you will have to pay a tax equal to 1% of the highest excess TFSA amount in the month, for each month that the excess amount stays in your account. For more information, refer to Tax payable on excess TFSA amount.
+
+As the account holder, you are the only person who can do the following with your TFSA:
+
+make contributions
+make withdrawals
+determine how funds are invested
+You can give your spouse or common-law partner money so that they can contribute to their own TFSA, and this amount or any earned income from that amount will not be allocated back to you. The total contributions you each make to your own TFSAs cannot be more than your TFSA contribution room. For more information, refer to TFSA contribution room.
+
+Management fees related to a TFSA trust and paid by the holder are not considered to be contributions to the TFSA. The payment of investment counsel, transfer, or other fees by a TFSA trust will not result in a distribution (withdrawal) from the TFSA trust.
+
+[TFSA contribution room]
+Your TFSA contribution room is the maximum amount that you can contribute to your TFSA.
+
+Only contributions made under a valid SIN are accepted as TFSA contributions.
+
+If you were 18 or older in 2009, your TFSA contribution room grows each year even if you do not file an income tax and benefit return or open a TFSA.
+
+If you turned 18 after 2009, your TFSA contribution room starts in the year you turned 18 and your TFSA contribution room accumulates every year after that year.
+
+Investment income earned by, and changes in the value of your TFSA investments will not affect your TFSA contribution room for current or future years.
+
+The annual TFSA dollar limit for each of the years from 2009 to 2025 are:
+
+Annual TFSA dollar limit
+2009 to 2012	$  5,000
+2013 and 2014	$  5,500
+2015	$10,000
+2016 to 2018	$  5,500
+2019 to 2022	$  6,000
+2023	$  6,500
+2024 and 2025	$  7,000
+The TFSA annual room limit will be indexed to inflation and rounded to the nearest $500.
+
+Example
+Brayden was eager to open his TFSA, but he didn’t turn 18 until December 21, 2023. On January 4, 2024, he opened a TFSA and contributed $13,500 ($6,500 for 2023 plus $7,000 for 2024 – the maximum TFSA dollar limits for those years). On the advice of his broker, he had opened a self‑directed TFSA and invested in stocks that increased in value. By the end of 2024, the value in Brayden’s TFSA had increased to $13,800. Brayden was worried that for 2025, he would only be able to contribute $6,700 (the TFSA dollar limit for 2025 less the $300 increase in value in his TFSA through 2024). Neither the earnings produced in the account nor the increase in its value will reduce the TFSA contribution room in the following year, so Brayden can contribute up to $7,000 in 2025 to his TFSA.
+
+[Where to find your TFSA contribution room information]
+Your TFSA contribution room information can be found by using one of the following services:
+
+My Account for Individuals.
+Represent a Client if you have an authorized representative.
+Tax Information Phone Service (TIPS) at 1-800-267-6999.
+In addition, if you want to receive a TFSA Room Statement, call us. You can also ask for a TFSA Transaction Summary that shows the information that we received from your TFSA issuer(s) about your contributions and withdrawals.
+
+If the information that we have about your TFSA transactions is not complete or if you have made contributions to your TFSA this year, use Form RC343, Worksheet – TFSA contribution room, to calculate your TFSA contribution room for the current year. If we have deemed your unused TFSA contribution room to be a specific amount, do not use this form; call us for more information.
+
+You must keep records about your TFSA transactions to make sure that your contributions do not go over your TFSA contribution room. We will keep track of an individual's contribution room and determine the available TFSA contribution room for each eligible individual based on information provided annually by the TFSA issuers.
+
+[How to request a waiver or cancellation of the TFSA taxes]
+We can waive or cancel all or part of the taxes if we determine it is fair to do so after reviewing all factors, including whether:
+
+the tax arose because of a reasonable error
+the extent to which the transaction or series of transactions that gave rise to the tax also gave rise to another tax under the Income Tax Act
+the extent to which payments have been made from the person’s TFSA
+Note
+A waiver refers to penalties and interest otherwise payable by a taxpayer for which relief is granted by the CRA before these amounts are assessed or charged to the taxpayer. A cancellation refers to penalties and interest amounts that were assessed or charged to the taxpayer for which relief is granted by the CRA.
+
+The waiver is limited to tax paid under Part XI.01 and not taxes paid under any other Part of the Income Tax Act.
+
+To consider your request, we need a letter that explains why the tax liability arose, and why it would be fair to cancel or waive all or part of the tax. Your request can be sent to one of the following addresses. You can also submit your request using the “Submit documents” service in My Account.
+
+TFSA Processing Unit
+Canada Revenue Agency
+Sudbury Tax Centre
+Post Office Box 20000, Station A
+Sudbury ON  P3A 5C1
+
+Or
+
+TFSA Processing Unit
+Canada Revenue Agency
+Winnipeg Tax Centre
+Post Office Box 14000, Station Main
+Winnipeg MB  R3C 3M2
+
+[What to do if you disagree with our decision]
+If you disagree with our decision on your request for a waiver or cancellation of your TFSA tax payable, you can submit a request for a second review at the address shown above or through the “Submit Documents” service in My Account.
+
+If you still disagree with our decision after a second review, you can apply to the Federal Court for a judicial review within 30 days of the date of the decision letter.
+
+For more information on the judicial review process and how to apply, please visit the Courts Administration Service or contact your local Federal Court Registry office.
