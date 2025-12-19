@@ -11,6 +11,19 @@ def embed_batch(texts: list[str], client):
         contents=texts
     )
     return [e.values for e in response.embeddings]
+
+def embed_query(query: str, client):
+    response = client.models.embed_content(
+        model=EMBEDDING_MODEL,
+        contents=query
+    )
+    vector = np.array(
+        [response.embeddings[0].values],
+        dtype="float32"
+    )
+
+    faiss.normalize_L2(vector)
+    return vector
     
 def ingest(client):
     knowledge_dir = os.path.join(os.path.dirname(__file__), "knowledge")
