@@ -18,6 +18,3 @@ def chunk_text(text: str):
             })
 
     return chunks
-
-#
-# cosine for embeddings here

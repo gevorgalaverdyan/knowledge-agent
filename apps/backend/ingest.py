@@ -2,19 +2,18 @@ import os
 import json
 import faiss
 import numpy as np
-from globals import EMBEDDING_MODEL
 from utils import chunk_text
 
 def embed_batch(texts: list[str], client):
     response = client.models.embed_content(
-        model=EMBEDDING_MODEL,
+        model=os.getenv("GEMINI_EMBEDDING_MODEL", "gemini-embedding-001"),
         contents=texts
     )
     return [e.values for e in response.embeddings]
 
 def embed_query(query: str, client):
     response = client.models.embed_content(
-        model=EMBEDDING_MODEL,
+        model=os.getenv("GEMINI_EMBEDDING_MODEL", "gemini-embedding-001"),
         contents=query
     )
     vector = np.array(

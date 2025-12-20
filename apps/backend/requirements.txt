@@ -1,0 +1,4 @@
+faiss-cpu
+google-genai
+pylint
+fastapi[standard]

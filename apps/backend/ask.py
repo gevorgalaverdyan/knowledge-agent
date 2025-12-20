@@ -5,15 +5,17 @@ import faiss
 from google import genai
 
 from ingest import embed_query
-from globals import GENAI_MODEL
 
 # --------------------
 # Setup
 # --------------------
 
 api_key = os.getenv("GEMINI_API_KEY")
+GENAI_MODEL = os.getenv("GEMINI_GENAI_MODEL", "gemini-3-flash-preview")
 if not api_key:
     raise RuntimeError("Missing GEMINI_API_KEY")
+if not GENAI_MODEL:
+    raise RuntimeError("Missing GEMINI_GENAI_MODEL")
 
 client = genai.Client(api_key=api_key)
 
