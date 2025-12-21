@@ -1,7 +1,1 @@
-from fastapi import APIRouter
-
-from api import chat
-
-
-router = APIRouter()
-router.include_router(chat.router)
+# Agents module - no router setup here to avoid circular imports

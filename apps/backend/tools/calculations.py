@@ -1,5 +1,7 @@
 from datetime import date
 
+from schemas.chat import CalculationToolResult
+
 TFSA_LIMITS = {
     2009: 5000,
     2010: 5000,
@@ -25,7 +27,7 @@ Tool: TFSA contribution room Calculator
 """
 def calculate_tfsa_contribution_room(
     year_turned_18: int,
-) -> dict:
+) -> CalculationToolResult:
     current_year = date.today().year
 
     if year_turned_18 > current_year:
@@ -39,13 +41,12 @@ def calculate_tfsa_contribution_room(
         total += amount
         yearly_breakdown[year] = amount
     
-    return {
-        "total_contribution_room": total,
-        "yearly_limits": yearly_breakdown,
-        "assumptions": [
+    return CalculationToolResult(
+        total_contribution_room=total, 
+        yearly_breakdown=yearly_breakdown, 
+        assumptions=[
             "Canadian resident for all eligible years",
             "No prior TFSA contributions",
             "No withdrawals",
             "CRA annual limits used"
-        ]
-    }
+        ])

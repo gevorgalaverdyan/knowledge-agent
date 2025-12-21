@@ -2,6 +2,7 @@ from fastapi import APIRouter
 from core.setup import retriever, client
 from rag.ask import ask_llm
 from core.config import settings
+from schemas.chat import GeminiResponse
 
 router = APIRouter(tags=["chat"], prefix="/chat")
 
@@ -12,4 +13,8 @@ def chat(question: str):
         return {"answer": "No relevant CRA sections found."}
 
     answer = ask_llm(chunks, question, client, settings.GENAI_MODEL)
-    return {"answer": answer}
+
+    if not answer:
+        answer = "No answer could be generated"
+        
+    return GeminiResponse(answer=answer)
