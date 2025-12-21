@@ -7,4 +7,6 @@ class Chat(BaseModel):
     id: str
     messages: List[str]
     created_at: datetime
-    updated_at: datetime
+
+class GeminiResponse(BaseModel):
+    answer: str

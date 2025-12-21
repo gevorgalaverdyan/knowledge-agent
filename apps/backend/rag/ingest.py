@@ -2,7 +2,8 @@ import os
 import json
 import faiss
 import numpy as np
-from utils import chunk_text
+
+from utils.utils import chunk_text
 
 def embed_batch(texts: list[str], client):
     response = client.models.embed_content(
@@ -78,7 +79,7 @@ def ingest(client):
 
     faiss.normalize_L2(vectors)
 
-    index.add(vectors)
+    index.add(vectors) # type: ignore
 
     print(f"FAISS index built with {index.ntotal} vectors")
 

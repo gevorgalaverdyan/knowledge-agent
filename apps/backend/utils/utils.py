@@ -18,3 +18,11 @@ def chunk_text(text: str):
             })
 
     return chunks
+
+def extract_year(question: str) -> int:
+    """
+    Extracts a year from the question.
+    Assumes the year refers to when the user turned 18.
+    """
+    match = re.search(r'\b20\d{2}\b', question)
+    return int(match.group()) if match else -1
