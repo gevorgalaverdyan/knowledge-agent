@@ -1,6 +1,9 @@
 import faiss
 import json
 from rag.ingest import embed_query
+import logging
+
+logger = logging.getLogger(__name__)
 
 class FaissRetriever:
     def __init__(self, index_path: str, metadata_path: str, client):

@@ -1,9 +1,10 @@
-from typing import Dict
 from schemas.chat import CalculationAnswer, ToolAnswer, ToolError
 from tools.calculations import calculate_tfsa_contribution_room
 from utils.utils import extract_year
 from tools.retrieval import find_relevant_sections
+import logging
 
+logger = logging.getLogger(__name__)
 
 class TFSAAagent:
 
@@ -12,6 +13,7 @@ class TFSAAagent:
 
         # --- Tool decision ---
         if "contribution" in question_lower:
+            logger.info("TFSA contribution question detected. Using calculation tool.")
             year_turned_18 = extract_year(question)
 
             if year_turned_18 == -1:

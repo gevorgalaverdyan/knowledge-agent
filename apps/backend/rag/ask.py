@@ -1,12 +1,15 @@
 from agents.tfsa_agent import TFSAAagent
 from schemas.chat import CalculationAnswer
 from rag.prompt import build_context, build_prompt
+import logging
 
+logger = logging.getLogger(__name__)
 agent = TFSAAagent()
 
 def ask_llm(chunks, question: str, client, model: str):
     agent_result = agent.handle_question(question)
 
+    logger.info(f"Agent result: {agent_result}")
     if agent_result:
         if isinstance(agent_result, CalculationAnswer):
             sections = agent_result.sections
