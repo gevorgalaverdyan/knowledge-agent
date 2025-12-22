@@ -1,1 +1,49 @@
-<h1>Hello</h1>
+<z-layout class="h-screen flex flex-col overflow-hidden">
+    <app-navbar></app-navbar>
+    <z-layout class="overflow-hidden">
+        <z-sidebar [zWidth]="200" class="!p-0">
+            <nav class="flex h-full flex-col gap-2 p-4">
+                <z-sidebar-group>
+                    <z-sidebar-group-label>Menu</z-sidebar-group-label>
+                    <button z-button zType="secondary" class="justify-start">
+                        <z-icon zType="file-text" class="mr-2" />
+                        Chat 1
+                    </button>
+                    <button z-button zType="ghost" class="justify-start">
+                        <z-icon zType="file-text" class="mr-2" />
+                        Chat 2
+                    </button>
+                    <button z-button zType="ghost" class="justify-start">
+                        <z-icon zType="file-text" class="mr-2" />
+                        Chat 3
+                    </button>
+                </z-sidebar-group>
+            </nav>
+        </z-sidebar>
+
+        <z-layout class="h-full">
+            <z-content class="overflow-auto">
+                <div class="space-y-4">
+                    <z-skeleton class="h-32 w-full" />
+                    <z-skeleton class="h-48 w-full" />
+                    <z-skeleton class="h-24 w-full" />
+
+                    <z-input-group [zAddonAfter]="actions" class="mb-4">
+                        <textarea name="prompt" z-input class="h-30 resize-none w-full"
+                            placeholder="Enter your message"></textarea>
+                    </z-input-group>
+
+                    <ng-template #actions>
+                        <div class="flex w-full items-center justify-between">
+                            <span class="text-muted-foreground text-xs">120 characters left</span>
+                            <button type="submit" z-button zSize="sm">Submit</button>
+                        </div>
+                    </ng-template>
+
+                </div>
+            </z-content>
+        </z-layout>
+
+    </z-layout>
+    <app-footer></app-footer>
+</z-layout>
