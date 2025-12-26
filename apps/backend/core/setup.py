@@ -1,11 +1,10 @@
+import logging
+import sys
+
 from fastapi import APIRouter, FastAPI
 
 from llm.gemini import get_gemini_client
 from rag.retriever import FaissRetriever
-
-import logging
-import sys
-
 
 def setup_logging(level=logging.INFO):
     """
