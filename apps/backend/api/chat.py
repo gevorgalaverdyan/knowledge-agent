@@ -22,7 +22,7 @@ def get_db():
         db.close()
 
 
-@router.post("/create")
+@router.post("/create", description="Create a new chat session")
 def create_chat(title: str, db: Session = Depends(get_db)):
     logger.info("Creating a new chat session.")
     chat = Chat(chat_title=title)
@@ -32,8 +32,29 @@ def create_chat(title: str, db: Session = Depends(get_db)):
 
     return 201, {"chat_id": str(chat.id), "message": "Chat created successfully."}
 
+@router.get("/{chat_id}/messages", description="Retrieve messages for a specific chat session")
+def get_messages(chat_id: str, db: Session = Depends(get_db)):
+    logger.info("Retrieving messages for chat_id: %s", chat_id)
+    chat = db.query(Chat).filter(Chat.id == chat_id).first()
+    if not chat:
+        logger.error("Chat with id %s not found.", chat_id)
+        return 404, {"error": "Chat not found."}
 
-@router.post("/message")
+    messages = db.query(Message).filter(Message.chat_id == chat.id).order_by(Message.created_at).all()
+    messages_data = [
+        {
+            "id": str(message.id),
+            "text": message.text,
+            "sent_by": message.sent_by.value,
+            "created_at": message.created_at,
+        }
+        for message in messages
+    ]
+
+    return 200, {"chat_id": str(chat.id), "messages": messages_data}
+
+
+@router.post("/message", description="Send a message to the chat and receive an answer")
 def create_message(chat_id: str, question: str, db: Session = Depends(get_db)):
     logger.info("Received question: %s", question)
 
