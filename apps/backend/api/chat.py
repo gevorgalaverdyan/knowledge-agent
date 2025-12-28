@@ -8,6 +8,7 @@ from core.config import settings
 from models.chat import Chat
 from models.message import Message, MessageSenderType
 from rag.ask import ask_llm
+from utils.utils import format_chat_history
 
 logger = logging.getLogger(__name__)
 
@@ -89,8 +90,14 @@ def create_message(chat_id: str, question: str, db: Session = Depends(get_db)):
         db.commit()
         db.refresh(message)
         return 204, {"message": message}
+    
+    recent_messages = _get_recent_messages(chat_id, db)
 
-    answer = ask_llm(chunks, question, client, settings.GENAI_MODEL)
+    chat_history = format_chat_history(recent_messages)
+
+    answer = ask_llm(
+        chunks, question, client, settings.GENAI_MODEL, chat_history=chat_history
+    )
     logger.info("Generated answer: %s", answer)
 
     if not answer:
@@ -108,3 +115,13 @@ def create_message(chat_id: str, question: str, db: Session = Depends(get_db)):
     db.refresh(message)
 
     return 200, {"answer": answer}
+
+
+def _get_recent_messages(chat_id: str, db: Session, limit: int = 5):
+    return (
+        db.query(Message)
+        .filter(Message.chat_id == chat_id)
+        .order_by(Message.created_at.desc())
+        .limit(limit)
+        .all()
+    )

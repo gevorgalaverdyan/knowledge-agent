@@ -11,13 +11,13 @@ def build_context(chunks):
         else:
             section_name = c['section']
             text = c['text']
-        
+
         context_parts.append(f"[Section: {section_name}]\n{text}")
-    
+
     return "\n\n".join(context_parts)
 
 
-def build_prompt(context: str, question: str, tool_result: ToolAnswer | None = None) -> str:
+def build_prompt(context: str, question: str, tool_result: ToolAnswer | None = None, chat_history: str = "") -> str:
     tool_section = ""
 
     if tool_result:
@@ -27,7 +27,7 @@ def build_prompt(context: str, question: str, tool_result: ToolAnswer | None = N
 
         Use this result when answering the question.
         """
-    
+
     return f"""
     You are a regulatory knowledge assistant specializing in Canadian federal tax guidance.
 
@@ -55,6 +55,9 @@ def build_prompt(context: str, question: str, tool_result: ToolAnswer | None = N
     {context}
 
     {tool_section}
+
+    PREVIOUS CONVERSATION:
+    {chat_history}
 
     Question:
     {question}
