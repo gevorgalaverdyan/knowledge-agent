@@ -5,10 +5,10 @@
             <nav class="flex h-full flex-col gap-2 p-4">
                 <z-sidebar-group>
                     <z-sidebar-group-label>Menu</z-sidebar-group-label>
-                    @for (c of chats; track $index) {
-                    <button z-button zType="secondary" class="justify-start">
-                        <z-icon zType="file-text" class="mr-2" />
-                        {{c.chatTitle}}
+                    @for (c of chats(); track $index) {
+                    <button z-button zType="secondary" class="justify-start" zTooltip="{{c.chat_title}}" (click)="selectedChatId.set(c.id)">
+                        <z-icon zType="file-text" />
+                        <div class="w-fit overflow-hidden text-ellipsis whitespace-nowrap">{{c.chat_title}}</div>
                     </button>
                     }
                 </z-sidebar-group>
@@ -18,15 +18,13 @@
         <z-layout class="h-full">
             <z-content class="overflow-auto">
                 <div class="space-y-4">
-                    @for (item of chats[0].messages; track $index) {
-                    <z-card class="w-full">
-                        <markdown [data]="item.text"></markdown>
-                    </z-card>
-                    }
-                    <!-- <z-skeleton class="h-32 w-full" />
+                    @if (chats().length > 0) {
+                    <app-message [chat_id]="selectedChatId() || chats()[0].id"></app-message>
+                    }@else{
+                    <z-skeleton class="h-32 w-full" />
                     <z-skeleton class="h-48 w-full" />
-                    <z-skeleton class="h-24 w-full" /> -->
-
+                    <z-skeleton class="h-24 w-full" />
+                    }
                     <div class="sticky mb-32">
                         <z-input-group [zAddonAfter]="actions" class="mb-4">
                             <textarea name="prompt" z-input class="h-30 resize-none w-full"

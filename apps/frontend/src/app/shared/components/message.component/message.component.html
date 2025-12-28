@@ -1,0 +1,21 @@
+@if (loading) {
+<div class="space-y-4 mb-4">
+    <z-skeleton class="h-32 w-full" />
+    <z-skeleton class="h-48 w-full" />
+    <z-skeleton class="h-24 w-full" />
+</div>
+}@else {
+<div class="space-y-4 mb-4">
+    @for (m of messages(); track $index) {
+    @if (m.sent_by === 'system') {
+    <z-card class="w-full">
+        <markdown [data]="m.text"></markdown>
+    </z-card>
+    }@else{
+    <z-card class="w-full text-right bg-background">
+        <div>{{m.text}}</div>
+    </z-card>
+    }
+    }
+</div>
+}

@@ -22,6 +22,12 @@ def get_db():
         db.close()
 
 
+@router.get("/chats", description="Fetch all chat sessions")
+def get_chats(db: Session = Depends(get_db)):
+    chats = db.query(Chat).all()
+    return {"code": 200, "chats": chats}
+
+
 @router.post("/create", description="Create a new chat session")
 def create_chat(title: str, db: Session = Depends(get_db)):
     logger.info("Creating a new chat session.")
@@ -32,26 +38,25 @@ def create_chat(title: str, db: Session = Depends(get_db)):
 
     return 201, {"chat_id": str(chat.id), "message": "Chat created successfully."}
 
-@router.get("/{chat_id}/messages", description="Retrieve messages for a specific chat session")
+
+@router.get(
+    "/{chat_id}/messages", description="Retrieve messages for a specific chat session"
+)
 def get_messages(chat_id: str, db: Session = Depends(get_db)):
     logger.info("Retrieving messages for chat_id: %s", chat_id)
     chat = db.query(Chat).filter(Chat.id == chat_id).first()
     if not chat:
         logger.error("Chat with id %s not found.", chat_id)
-        return 404, {"error": "Chat not found."}
+        return {"code": 404, "error": "Chat not found."}
 
-    messages = db.query(Message).filter(Message.chat_id == chat.id).order_by(Message.created_at).all()
-    messages_data = [
-        {
-            "id": str(message.id),
-            "text": message.text,
-            "sent_by": message.sent_by.value,
-            "created_at": message.created_at,
-        }
-        for message in messages
-    ]
+    messages = (
+        db.query(Message)
+        .filter(Message.chat_id == chat.id)
+        .order_by(Message.created_at)
+        .all()
+    )
 
-    return 200, {"chat_id": str(chat.id), "messages": messages_data}
+    return {"code": 200, "chat_id": str(chat.id), "messages": messages}
 
 
 @router.post("/message", description="Send a message to the chat and receive an answer")
@@ -83,14 +88,7 @@ def create_message(chat_id: str, question: str, db: Session = Depends(get_db)):
         db.add(message)
         db.commit()
         db.refresh(message)
-        return 204, {
-            "message": {
-                "id": str(message.id),
-                "text": message.text,
-                "sent_by": message.sent_by.value,
-                "created_at": message.created_at,
-            }
-        }
+        return 204, {"message": message}
 
     answer = ask_llm(chunks, question, client, settings.GENAI_MODEL)
     logger.info("Generated answer: %s", answer)
@@ -109,11 +107,4 @@ def create_message(chat_id: str, question: str, db: Session = Depends(get_db)):
     db.commit()
     db.refresh(message)
 
-    return 200, {
-        "message": {
-            "id": str(message.id),
-            "text": answer,
-            "sent_by": MessageSenderType.SYSTEM.value,
-            "created_at": message.created_at,
-        }
-    }
+    return 200, {"answer": answer}
