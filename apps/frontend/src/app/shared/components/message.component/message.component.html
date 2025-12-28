@@ -1,4 +1,4 @@
-@if (loading) {
+@if (loading()) {
 <div class="space-y-4 mb-4">
     <z-skeleton class="h-32 w-full" />
     <z-skeleton class="h-48 w-full" />
@@ -8,13 +8,23 @@
 <div class="space-y-4 mb-4">
     @for (m of messages(); track $index) {
     @if (m.sent_by === 'system') {
-    <z-card class="w-full">
-        <markdown [data]="m.text"></markdown>
-    </z-card>
+    <div>
+        <z-card class="w-full">
+            <markdown [data]="m.text"></markdown>
+        </z-card>
+        <div class="flex text-ring mt-0.5 text-sm">
+            {{ m.created_at | date: 'short' }}
+        </div>
+    </div>
     }@else{
-    <z-card class="w-full text-right bg-background">
-        <div>{{m.text}}</div>
-    </z-card>
+    <div>
+        <z-card class="w-full text-right bg-background">
+            <div>{{m.text}}</div>
+        </z-card>
+        <div class="flex flex-row-reverse text-ring mt-0.5 text-sm">
+            {{ m.created_at | date: 'short' }}
+        </div>
+    </div>
     }
     }
 </div>
