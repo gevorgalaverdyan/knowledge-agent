@@ -92,3 +92,41 @@ cd apps/frontend
 npm install
 npm start
 ```
+
+## Testing
+
+### Backend Tests
+
+The backend includes comprehensive unit tests for all major components:
+
+- **Utility Functions**: Tests for text chunking, year extraction, and chat history formatting
+- **TFSA Calculator**: Tests for contribution room calculations with various scenarios
+- **TFSA Agent**: Tests for agent decision-making and tool selection logic
+- **API Endpoints**: Integration tests for chat and message endpoints
+
+**Running Tests:**
+
+```bash
+cd apps/backend
+pip install -r requirements.txt
+pytest tests/
+```
+
+**Running Tests with Coverage:**
+
+```bash
+pytest tests/ --cov=. --cov-report=html
+```
+
+**Test Structure:**
+- `tests/conftest.py` - Test fixtures and configuration
+- `tests/test_utils.py` - Utility function tests (11 tests)
+- `tests/test_calculations.py` - TFSA calculation tests (7 tests)
+- `tests/test_agent.py` - Agent logic tests (7 tests)
+- `tests/test_api.py` - API endpoint tests
+
+The test suite uses:
+- **pytest** for test execution
+- **pytest-cov** for coverage reporting
+- **httpx** for API testing
+- **SQLite in-memory database** for test isolation
