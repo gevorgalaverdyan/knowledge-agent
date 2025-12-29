@@ -14,4 +14,9 @@ export class ChatService {
   public getChats() : Observable<Chat[]>{
     return this.http.get<Chat[]>(`${this.API_URL}chats`);
   }
+
+  public askChat(chat_id: string, message: string) : Observable<Message>{
+    console.log('Sending message to chat service:', { chat_id, message });
+    return this.http.post<Message>(`${this.API_URL}${chat_id}/message`, {}, { params: { question: message } });
+  }
 }

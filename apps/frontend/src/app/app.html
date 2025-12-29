@@ -6,7 +6,7 @@
                 <z-sidebar-group>
                     <z-sidebar-group-label>Menu</z-sidebar-group-label>
                     @for (c of chats(); track $index) {
-                    <button z-button zType="secondary" class="justify-start" zTooltip="{{c.chat_title}}" (click)="selectedChatId.set(c.id)">
+                    <button z-button zType="secondary" class="justify-start" zTooltip="{{c.chat_title}}" (click)="selectedChat.set(c)">
                         <z-icon zType="file-text" />
                         <div class="w-fit overflow-hidden text-ellipsis whitespace-nowrap">{{c.chat_title}}</div>
                     </button>
@@ -18,22 +18,24 @@
         <z-layout class="h-full">
             <z-content class="overflow-auto">
                 <div class="space-y-4">
+                    <h1 class="text-lg font-bold">{{selectedChat() ? selectedChat()!.chat_title : ''}}</h1>
+                    <z-divider />
                     @if (chats().length > 0) {
-                    <app-message [chat_id]="selectedChatId() || chats()[0].id"></app-message>
+                    <app-message [chat_id]="selectedChat() ? selectedChat()!.id : ''"></app-message>
                     }@else{
                     <z-skeleton class="h-32 w-full" />
                     <z-skeleton class="h-48 w-full" />
                     <z-skeleton class="h-24 w-full" />
                     }
                     <div class="sticky mb-32">
-                        <z-input-group [zAddonAfter]="actions" class="mb-4">
+                        <z-input-group [zAddonAfter]="actions" class="mb-4" [zLoading]="answering()">
                             <textarea name="prompt" z-input class="h-30 resize-none w-full"
-                                placeholder="Enter your message"></textarea>
+                                placeholder="Enter your message" [(ngModel)]="message"></textarea>
                         </z-input-group>
 
                         <ng-template #actions>
                             <div class="flex w-full items-center justify-between">
-                                <button type="submit" z-button zSize="sm">Submit</button>
+                                <button type="submit" z-button zSize="sm" (click)="askChat(message)" [zDisabled]="answering()">Submit</button>
                             </div>
                         </ng-template>
                     </div>

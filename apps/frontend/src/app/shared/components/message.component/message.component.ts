@@ -27,9 +27,9 @@ export class MessageComponent implements OnInit, OnChanges {
     }
   }
 
-  fetchMessages() {
+  fetchMessages(silent = false) {
     if (!this.chat_id) return;
-    this.loading.set(true);
+    if (!silent) this.loading.set(true);
     this.messageService.getMessages(this.chat_id).subscribe((data: any) => {
       this.messages.set(data.messages);
       this.loading.set(false);

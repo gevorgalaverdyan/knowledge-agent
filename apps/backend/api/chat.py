@@ -60,7 +60,7 @@ def get_messages(chat_id: str, db: Session = Depends(get_db)):
     return {"code": 200, "chat_id": str(chat.id), "messages": messages}
 
 
-@router.post("/message", description="Send a message to the chat and receive an answer")
+@router.post("/{chat_id}/message", description="Send a message to the chat and receive an answer")
 def create_message(chat_id: str, question: str, db: Session = Depends(get_db)):
     logger.info("Received question: %s", question)
 
@@ -71,7 +71,7 @@ def create_message(chat_id: str, question: str, db: Session = Depends(get_db)):
     chat = db.query(Chat).filter(Chat.id == chat_id).first()
     if not chat:
         logger.error("Chat with id %s not found.", chat_id)
-        return 404, {"error": "Chat not found."}
+        return {"code": 404, "error": "Chat not found."}
 
     message = Message(chat_id=chat.id, text=question, sent_by=MessageSenderType.USER)
     db.add(message)
@@ -89,7 +89,7 @@ def create_message(chat_id: str, question: str, db: Session = Depends(get_db)):
         db.add(message)
         db.commit()
         db.refresh(message)
-        return 204, {"message": message}
+        return {"code": 204, "message": message}
     
     recent_messages = _get_recent_messages(chat_id, db)
 
@@ -114,7 +114,7 @@ def create_message(chat_id: str, question: str, db: Session = Depends(get_db)):
     db.commit()
     db.refresh(message)
 
-    return 200, {"answer": answer}
+    return {"code": 200, "message": message}
 
 
 def _get_recent_messages(chat_id: str, db: Session, limit: int = 5):
