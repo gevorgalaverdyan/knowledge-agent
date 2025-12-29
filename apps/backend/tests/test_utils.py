@@ -92,28 +92,18 @@ class TestFormatChatHistory:
     
     def test_format_chat_history_single_message(self):
         """Test formatting single message"""
-        message = type('Message', (), {
-            'text': 'Hello',
-            'sent_by': 'user'
-        })()
+        from unittest.mock import Mock
+        message = Mock(text='Hello', sent_by='user')
         messages = [message]
         formatted = format_chat_history(messages)
         assert formatted == "User: Hello"
     
     def test_format_chat_history_multiple_messages(self):
         """Test formatting multiple messages"""
-        message1 = type('Message', (), {
-            'text': 'Hello',
-            'sent_by': 'user'
-        })()
-        message2 = type('Message', (), {
-            'text': 'Hi there',
-            'sent_by': 'system'
-        })()
-        message3 = type('Message', (), {
-            'text': 'How can I help?',
-            'sent_by': 'user'
-        })()
+        from unittest.mock import Mock
+        message1 = Mock(text='Hello', sent_by='user')
+        message2 = Mock(text='Hi there', sent_by='system')
+        message3 = Mock(text='How can I help?', sent_by='user')
         
         messages = [message1, message2, message3]
         formatted = format_chat_history(messages)
@@ -123,10 +113,8 @@ class TestFormatChatHistory:
     
     def test_format_chat_history_system_messages(self):
         """Test formatting with system messages"""
-        message1 = type('Message', (), {
-            'text': 'System message',
-            'sent_by': 'system'
-        })()
+        from unittest.mock import Mock
+        message1 = Mock(text='System message', sent_by='system')
         
         messages = [message1]
         formatted = format_chat_history(messages)

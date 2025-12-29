@@ -81,13 +81,15 @@ class TestCalculateTFSAContributionRoom:
         result = calculate_tfsa_contribution_room(2020)
         current_year = date.today().year
         
-        # Verify recent year limits are correct
+        # Verify recent year limits are correct for years we know
         assert result.yearly_breakdown[2020] == 6000
         assert result.yearly_breakdown[2021] == 6000
         assert result.yearly_breakdown[2022] == 6000
         assert result.yearly_breakdown[2023] == 6500
         assert result.yearly_breakdown[2024] == 7000
+        # Only check 2025 if current year is 2025 or later
         if current_year >= 2025:
+            assert 2025 in result.yearly_breakdown
             assert result.yearly_breakdown[2025] == 7000
 
 
