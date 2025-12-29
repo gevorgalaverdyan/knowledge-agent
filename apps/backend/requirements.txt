@@ -2,3 +2,8 @@ faiss-cpu
 google-genai
 pylint
 fastapi[standard]
+pytest
+pytest-asyncio
+pytest-cov
+httpx
+sqlalchemy

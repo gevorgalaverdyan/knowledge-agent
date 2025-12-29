@@ -14,6 +14,29 @@ The codebase is organized as a monorepo with the following structure:
 
 The backend is built with **FastAPI** and serves as the core intelligence of the application. It handles chat sessions, message history, and interacts with the LLM.
 
+### Testing
+
+The backend includes a comprehensive test suite with **62 tests** covering:
+- Unit tests for utility functions
+- TFSA calculation logic tests
+- Agent behavior tests  
+- RAG prompt generation tests
+- API endpoint tests
+
+**Run tests:**
+```bash
+cd apps/backend
+./run_tests.sh
+```
+
+Or manually:
+```bash
+cd apps/backend
+DB_URL="sqlite:///:memory:" GEMINI_API_KEY="test-key" python -m pytest tests/ -v
+```
+
+For detailed testing documentation, see [`apps/backend/TESTING.md`](apps/backend/TESTING.md).
+
 ### API Endpoints
 
 The following API endpoints are available:
