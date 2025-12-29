@@ -5,8 +5,14 @@
             <nav class="flex h-full flex-col gap-2 p-4">
                 <z-sidebar-group>
                     <z-sidebar-group-label>Menu</z-sidebar-group-label>
+                    <button z-button zType="default" class="justify-start w-full" (click)="openDialog()">
+                        <z-icon zType="plus" />
+                        Create New Chat
+                    </button>
+                    <z-divider />
                     @for (c of chats(); track $index) {
-                    <button z-button zType="secondary" class="justify-start" zTooltip="{{c.chat_title}}" (click)="selectedChat.set(c)">
+                    <button z-button zType="secondary" class="justify-start" zTooltip="{{c.chat_title}}"
+                        (click)="selectedChat.set(c)">
                         <z-icon zType="file-text" />
                         <div class="w-fit overflow-hidden text-ellipsis whitespace-nowrap">{{c.chat_title}}</div>
                     </button>
@@ -18,7 +24,11 @@
         <z-layout class="h-full">
             <z-content class="overflow-auto">
                 <div class="space-y-4">
-                    <h1 class="text-lg font-bold">{{selectedChat() ? selectedChat()!.chat_title : ''}}</h1>
+                    <div class="flex items-center justify-between">
+                        <h1 class="text-lg font-bold">{{selectedChat() ? selectedChat()!.chat_title : ''}}</h1>
+                        <z-icon zType="circle-x" zSize="xl" class="text-red-200 cursor-pointer hover:text-red-400"
+                            (click)="deleteChat(selectedChat() ? selectedChat()!.id : '')" />
+                    </div>
                     <z-divider />
                     @if (chats().length > 0) {
                     <app-message [chat_id]="selectedChat() ? selectedChat()!.id : ''"></app-message>
@@ -35,7 +45,8 @@
 
                         <ng-template #actions>
                             <div class="flex w-full items-center justify-between">
-                                <button type="submit" z-button zSize="sm" (click)="askChat(message)" [zDisabled]="answering()">Submit</button>
+                                <button type="submit" z-button zSize="sm" (click)="askChat(message)"
+                                    [zDisabled]="answering()">Submit</button>
                             </div>
                         </ng-template>
                     </div>

@@ -16,7 +16,14 @@ export class ChatService {
   }
 
   public askChat(chat_id: string, message: string) : Observable<Message>{
-    console.log('Sending message to chat service:', { chat_id, message });
     return this.http.post<Message>(`${this.API_URL}${chat_id}/message`, {}, { params: { question: message } });
+  }
+
+  public createChat(chat_title: string) : Observable<Chat>{
+    return this.http.post<Chat>(`${this.API_URL}create`, {}, { params: { chat_title : chat_title } });
+  }
+
+  public deleteChat(chat_id: string) : Observable<any>{
+    return this.http.delete<any>(`${this.API_URL}${chat_id}/delete`);
   }
 }

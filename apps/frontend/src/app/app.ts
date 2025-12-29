@@ -14,6 +14,8 @@ import { MessageComponent } from './shared/components/message.component/message.
 import { ZardTooltipModule } from './shared/components/tooltip/tooltip';
 import { ZardSkeletonComponent } from './shared/components/skeleton/skeleton.component';
 import { ZardDividerComponent } from './shared/components/divider/divider.component';
+import { ZardDialogService } from './shared/components/dialog/dialog.service';
+import { CreateChatDialog, iDialogData } from "./shared/components/create-chat-dialog/create-chat-dialog";
 
 @Component({
   selector: 'app-root',
@@ -33,6 +35,7 @@ import { ZardDividerComponent } from './shared/components/divider/divider.compon
     ContentComponent,
     MessageComponent,
     FormsModule,
+
   ],
   templateUrl: './app.html',
   styleUrl: './app.css'
@@ -40,7 +43,8 @@ import { ZardDividerComponent } from './shared/components/divider/divider.compon
 export class App implements OnInit {
   @ViewChild(MessageComponent) messageComponent!: MessageComponent;
   chats = signal<Chat[]>([]);
-  chatsService = inject(ChatService);
+  private chatsService = inject(ChatService);
+  private dialogService = inject(ZardDialogService);
   selectedChat = signal<Chat | null>(null);
   answering = signal<boolean>(false);
   message = '';
@@ -56,9 +60,41 @@ export class App implements OnInit {
     if (!this.selectedChat()) return;
     this.answering.set(true);
     this.chatsService.askChat(this.selectedChat()!.id, message).subscribe((data: any) => {
-        this.messageComponent.fetchMessages(true);
-        this.answering.set(false);
-        this.message = '';
+      this.messageComponent.fetchMessages(true);
+      this.answering.set(false);
+      this.message = '';
+    });
+  }
+
+  openDialog() {
+    this.dialogService.create({
+      zTitle: 'Create New Chat',
+      zDescription: `Ask your question. Click save when you're done.`,
+      zContent: CreateChatDialog,
+      zData: {
+        chat_title: '',
+      } as iDialogData,
+      zOkText: 'Save changes',
+      zOnOk: instance => {
+        console.log('Form submitted:', instance.form.value);
+        if (instance.form.value.chat_title) {
+          this.chatsService.createChat(instance.form.value.chat_title).subscribe((newChat: any) => {
+            this.chats.update(chats => [...chats, newChat.chat]);
+            this.selectedChat.set(newChat);
+          });
+        }
+      },
+      zWidth: '425px',
+    });
+  }
+
+  deleteChat(chat_id: string) {
+    if(!chat_id) return;
+    this.chatsService.deleteChat(chat_id).subscribe(() => {
+      this.chats.update(chats => chats.filter(chat => chat.id !== chat_id));
+      if (this.selectedChat() && this.selectedChat()!.id === chat_id) {
+        this.selectedChat.set(this.chats().length > 0 ? this.chats()[0] : null);
+      }
     });
   }
 }

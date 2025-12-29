@@ -30,15 +30,27 @@ def get_chats(db: Session = Depends(get_db)):
 
 
 @router.post("/create", description="Create a new chat session")
-def create_chat(title: str, db: Session = Depends(get_db)):
+def create_chat(chat_title: str, db: Session = Depends(get_db)):
     logger.info("Creating a new chat session.")
-    chat = Chat(chat_title=title)
+    chat = Chat(chat_title=chat_title)
     db.add(chat)
     db.commit()
     db.refresh(chat)
 
-    return 201, {"chat_id": str(chat.id), "message": "Chat created successfully."}
+    return {"code": 201, "chat": chat}
 
+@router.delete("/{chat_id}/delete", description="Delete a chat session")
+def delete_chat(chat_id: str, db: Session = Depends(get_db)):
+    logger.info("Deleting chat session with id: %s", chat_id)
+    chat = db.query(Chat).filter(Chat.id == chat_id).first()
+    if not chat:
+        logger.error("Chat with id %s not found.", chat_id)
+        return {"code": 404, "error": "Chat not found."}
+
+    db.delete(chat)
+    db.commit()
+    logger.info("Chat session with id %s deleted successfully.", chat_id)
+    return {"code": 200, "message": "Chat deleted successfully."}
 
 @router.get(
     "/{chat_id}/messages", description="Retrieve messages for a specific chat session"
@@ -60,7 +72,9 @@ def get_messages(chat_id: str, db: Session = Depends(get_db)):
     return {"code": 200, "chat_id": str(chat.id), "messages": messages}
 
 
-@router.post("/{chat_id}/message", description="Send a message to the chat and receive an answer")
+@router.post(
+    "/{chat_id}/message", description="Send a message to the chat and receive an answer"
+)
 def create_message(chat_id: str, question: str, db: Session = Depends(get_db)):
     logger.info("Received question: %s", question)
 
@@ -90,7 +104,7 @@ def create_message(chat_id: str, question: str, db: Session = Depends(get_db)):
         db.commit()
         db.refresh(message)
         return {"code": 204, "message": message}
-    
+
     recent_messages = _get_recent_messages(chat_id, db)
 
     chat_history = format_chat_history(recent_messages)
