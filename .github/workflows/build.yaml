@@ -51,10 +51,6 @@ jobs:
           echo GEMINI_EMBEDDING_MODEL=${{ secrets.GEMINI_EMBEDDING_MODEL }} >> .env
           echo GEMINI_GENAI_MODEL=${{ secrets.GEMINI_GENAI_MODEL }} >> .env
 
-      - name: Start server
-        run: |
-          fastapi dev main.py
-      
       - name: Start server and Validate
         run: |
           fastapi dev main.py & 
