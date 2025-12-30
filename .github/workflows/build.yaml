@@ -1,0 +1,67 @@
+name: Build and Test
+
+on: workflow_dispatch
+
+jobs:
+  build-backend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: .apps/backend
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.3'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Start server
+        run: |
+          fastapi dev main.py
+      
+      - name: Start server and Validate
+        run: |
+          fastapi dev main.py & 
+          
+          sleep 5
+          
+          RESPONSE=$(curl -s http://localhost:8000/ | jq -r '.message')
+          
+          if [ "$RESPONSE" = "Server is running" ]; then
+            echo "Success: Received correct response"
+            exit 0
+          else
+            echo "Error: Expected 'Server is running' but got '$RESPONSE'"
+            exit 1
+          fi
+    
+  build-frontend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: .apps/frontend
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: apps/frontend/package-lock.json
+
+      - name: Install dependencies
+        run: npm install
+      
+      - name: Build project
+        run: npm run build
