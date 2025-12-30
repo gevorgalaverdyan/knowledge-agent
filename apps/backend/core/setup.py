@@ -30,13 +30,13 @@ def setup_logging(level=logging.INFO):
         root_logger.addHandler(handler)
 
 
-def create_app(router: APIRouter) -> FastAPI:
+def create_app(router: APIRouter, lifespan=None) -> FastAPI:
     origins = [
         "http://localhost",
         "http://localhost:4200",
     ]
 
-    app = FastAPI()
+    app = FastAPI(lifespan=lifespan)
     app.add_middleware(
         CORSMiddleware,
         allow_origins=origins,

@@ -10,4 +10,4 @@ try:
     SessionLocal = sessionmaker(bind=engine)
     Base = declarative_base()
 except Exception as e:
-    raise RuntimeError(f"Failed to set up database connection: {e}")
+    raise RuntimeError(f"Failed to set up database connection: {e}") from e
