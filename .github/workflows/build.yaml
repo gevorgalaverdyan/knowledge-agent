@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: .apps/backend
+        working-directory: apps/backend
 
     steps:
       - name: Checkout repository
@@ -48,7 +48,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: .apps/frontend
+        working-directory: apps/frontend
 
     steps:
       - uses: actions/checkout@v4
