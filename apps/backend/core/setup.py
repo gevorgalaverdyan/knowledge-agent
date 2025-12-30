@@ -3,9 +3,11 @@ import sys
 
 from fastapi import APIRouter, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-
+from fastapi_plugin.fast_api_client import Auth0FastAPI
 from llm.gemini import get_gemini_client
+from core.config import get_settings
 from rag.retriever import FaissRetriever
+
 
 def setup_logging(level=logging.INFO):
     """
@@ -15,7 +17,7 @@ def setup_logging(level=logging.INFO):
 
     formatter = logging.Formatter(
         fmt="%(asctime)s | %(levelname)-8s | %(name)s | %(message)s",
-        datefmt="%Y-%m-%d %H:%M:%S"
+        datefmt="%Y-%m-%d %H:%M:%S",
     )
 
     handler = logging.StreamHandler(sys.stdout)
@@ -33,7 +35,7 @@ def create_app(router: APIRouter) -> FastAPI:
         "http://localhost",
         "http://localhost:4200",
     ]
-    
+
     app = FastAPI()
     app.add_middleware(
         CORSMiddleware,
@@ -45,10 +47,22 @@ def create_app(router: APIRouter) -> FastAPI:
     app.include_router(router)
     return app
 
+
+def configure_auth0():
+    settings = get_settings()
+
+    auth0 = Auth0FastAPI(
+        domain=settings.AUTH0_DOMAIN,
+        audience=settings.AUTH0_AUDIENCE,
+    )
+
+    return auth0
+
+
 client = get_gemini_client()
 
 retriever = FaissRetriever(
     index_path="embedding/tfsa.faiss",
     metadata_path="embedding/tfsa_embeddings.json",
-    client=client
+    client=client,
 )

@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal, ViewChild } from '@angular/core';
+import { Component, inject, OnInit, PLATFORM_ID, signal, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { LayoutComponent } from './shared/components/layout/layout.component';
 import { ZardIconComponent } from './shared/components/icon/icon.component';
@@ -16,6 +16,9 @@ import { ZardSkeletonComponent } from './shared/components/skeleton/skeleton.com
 import { ZardDividerComponent } from './shared/components/divider/divider.component';
 import { ZardDialogService } from './shared/components/dialog/dialog.service';
 import { CreateChatDialog, iDialogData } from "./shared/components/create-chat-dialog/create-chat-dialog";
+import { AuthService } from '@auth0/auth0-angular';
+import { AsyncPipe } from '@angular/common';
+import { UserService } from './shared/services/user.service';
 
 @Component({
   selector: 'app-root',
@@ -35,16 +38,19 @@ import { CreateChatDialog, iDialogData } from "./shared/components/create-chat-d
     ContentComponent,
     MessageComponent,
     FormsModule,
-
+    AsyncPipe
   ],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
 export class App implements OnInit {
+  auth: AuthService = inject(AuthService);
+
   @ViewChild(MessageComponent) messageComponent!: MessageComponent;
   chats = signal<Chat[]>([]);
   private chatsService = inject(ChatService);
   private dialogService = inject(ZardDialogService);
+  private userService = inject(UserService);
   selectedChat = signal<Chat | null>(null);
   answering = signal<boolean>(false);
   message = '';

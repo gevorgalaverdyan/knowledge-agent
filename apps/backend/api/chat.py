@@ -2,9 +2,10 @@ import logging
 
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
+from core.auth import get_auth0
 from core.db import SessionLocal
 from core.setup import retriever, client
-from core.config import settings
+from core.config import get_settings
 from models.chat import Chat
 from models.message import Message, MessageSenderType
 from rag.ask import ask_llm
@@ -14,6 +15,8 @@ logger = logging.getLogger(__name__)
 
 router = APIRouter(tags=["chat"], prefix="/chat")
 
+settings = get_settings()
+auth0 = get_auth0()
 
 def get_db():
     db = SessionLocal()
@@ -24,13 +27,13 @@ def get_db():
 
 
 @router.get("/chats", description="Fetch all chat sessions")
-def get_chats(db: Session = Depends(get_db)):
+def get_chats(db: Session = Depends(get_db), _ = Depends(auth0.require_auth())):
     chats = db.query(Chat).all()
     return {"code": 200, "chats": chats}
 
 
 @router.post("/create", description="Create a new chat session")
-def create_chat(chat_title: str, db: Session = Depends(get_db)):
+def create_chat(chat_title: str, db: Session = Depends(get_db), _ = Depends(auth0.require_auth())):
     logger.info("Creating a new chat session.")
     chat = Chat(chat_title=chat_title)
     db.add(chat)
@@ -40,7 +43,7 @@ def create_chat(chat_title: str, db: Session = Depends(get_db)):
     return {"code": 201, "chat": chat}
 
 @router.delete("/{chat_id}/delete", description="Delete a chat session")
-def delete_chat(chat_id: str, db: Session = Depends(get_db)):
+def delete_chat(chat_id: str, db: Session = Depends(get_db), _ = Depends(auth0.require_auth())):
     logger.info("Deleting chat session with id: %s", chat_id)
     chat = db.query(Chat).filter(Chat.id == chat_id).first()
     if not chat:
@@ -55,7 +58,7 @@ def delete_chat(chat_id: str, db: Session = Depends(get_db)):
 @router.get(
     "/{chat_id}/messages", description="Retrieve messages for a specific chat session"
 )
-def get_messages(chat_id: str, db: Session = Depends(get_db)):
+def get_messages(chat_id: str, db: Session = Depends(get_db), _ = Depends(auth0.require_auth())):
     logger.info("Retrieving messages for chat_id: %s", chat_id)
     chat = db.query(Chat).filter(Chat.id == chat_id).first()
     if not chat:
@@ -75,7 +78,7 @@ def get_messages(chat_id: str, db: Session = Depends(get_db)):
 @router.post(
     "/{chat_id}/message", description="Send a message to the chat and receive an answer"
 )
-def create_message(chat_id: str, question: str, db: Session = Depends(get_db)):
+def create_message(chat_id: str, question: str, db: Session = Depends(get_db), _ = Depends(auth0.require_auth())):
     logger.info("Received question: %s", question)
 
     if not question.strip():
@@ -110,7 +113,7 @@ def create_message(chat_id: str, question: str, db: Session = Depends(get_db)):
     chat_history = format_chat_history(recent_messages)
 
     answer = ask_llm(
-        chunks, question, client, settings.GENAI_MODEL, chat_history=chat_history
+        chunks, question, client, settings.GEMINI_GENAI_MODEL, chat_history=chat_history
     )
     logger.info("Generated answer: %s", answer)
 
