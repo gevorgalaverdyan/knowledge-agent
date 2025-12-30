@@ -2,3 +2,6 @@ faiss-cpu
 google-genai
 pylint
 fastapi[standard]
+pydantic-settings
+sqlalchemy
+auth0-fastapi-api

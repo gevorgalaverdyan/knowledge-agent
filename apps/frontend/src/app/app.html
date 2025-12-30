@@ -1,6 +1,7 @@
 <z-layout class="h-screen flex flex-col overflow-hidden">
-    <app-navbar></app-navbar>
+    <app-navbar [auth]="auth"></app-navbar>
     <z-layout class="overflow-hidden">
+        @if (auth.isAuthenticated$ | async) {
         <z-sidebar [zWidth]="200" class="p-0!">
             <nav class="flex h-full flex-col gap-2 p-4">
                 <z-sidebar-group>
@@ -54,6 +55,16 @@
             </z-content>
         </z-layout>
 
+        } @else {
+        <z-layout class="h-full">
+            <z-content class="flex h-full items-center justify-center">
+                <div class="text-center">
+                    <h1 class="mb-4 text-2xl font-bold">Welcome to TFSA Assistant</h1>
+                    <p class="mb-6">Please log in to access your chats and start using the assistant.</p>
+                </div>
+            </z-content>
+        </z-layout>
+        }
     </z-layout>
     <app-footer></app-footer>
 </z-layout>
