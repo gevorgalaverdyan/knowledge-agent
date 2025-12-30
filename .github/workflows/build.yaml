@@ -5,6 +5,23 @@ on: workflow_dispatch
 jobs:
   build-backend:
     runs-on: ubuntu-latest
+
+    services:
+      db:
+        image: postgres:latest
+        env:
+          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+        ports:
+          - 5432:5432
+
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
     defaults:
       run:
         working-directory: apps/backend
@@ -23,6 +40,16 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
+
+      - name: Dump envs
+        run: |
+          touch .env
+          echo GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }} >> .env
+          echo DB_URL=${{ secrets.DB_URL }} >> .env
+          echo AUTH0_DOMAIN=${{ secrets.AUTH0_DOMAIN }} >> .env
+          echo AUTH0_AUDIENCE=${{ secrets.AUTH0_AUDIENCE }} >> .env
+          echo GEMINI_EMBEDDING_MODEL=${{ secrets.GEMINI_EMBEDDING_MODEL }} >> .env
+          echo GEMINI_GENAI_MODEL=${{ secrets.GEMINI_GENAI_MODEL }} >> .env
 
       - name: Start server
         run: |
