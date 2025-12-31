@@ -92,6 +92,11 @@ jobs:
           sed -i 's|__AUTH0_DOMAIN__|${{ secrets.AUTH0_DOMAIN }}|g' src/environments/environment.prod.ts
           sed -i 's|__AUTH0_CLIENT_ID__|${{ secrets.AUTH0_CLIENT_ID }}|g' src/environments/environment.prod.ts
           sed -i 's|__AUTH0_AUDIENCE__|${{ secrets.AUTH0_AUDIENCE }}|g' src/environments/environment.prod.ts
+      
+      - name: Verify environment file
+        run: |
+          ls -la src/environments/
+          cat src/environments/environment.prod.ts
         
       - name: Build Frontend
         run: npm run build -- --configuration production
