@@ -1,5 +1,4 @@
 export const environment = {
-    production: true,
     API_URL: 'http://localhost:8000',
     AUTH0_DOMAIN: 'dev-5xkzrksvvdyocvxg.us.auth0.com',
     AUTH0_CLIENT_ID: 'ORZEjOZ28svXnpdx0gB2QMgchMGVLSrZ',
