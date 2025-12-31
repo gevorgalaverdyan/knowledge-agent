@@ -4,9 +4,10 @@ import sys
 from fastapi import APIRouter, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi_plugin.fast_api_client import Auth0FastAPI
-from llm.gemini import get_gemini_client
-from core.config import get_settings
-from rag.retriever import FaissRetriever
+
+from app.llm.gemini import get_gemini_client
+from app.rag.retriever import FaissRetriever
+from app.core.config import get_settings
 
 
 def setup_logging(level=logging.INFO):
@@ -62,7 +63,7 @@ def configure_auth0():
 client = get_gemini_client()
 
 retriever = FaissRetriever(
-    index_path="embedding/tfsa.faiss",
-    metadata_path="embedding/tfsa_embeddings.json",
+    index_path="app/embedding/tfsa.faiss",
+    metadata_path="app/embedding/tfsa_embeddings.json",
     client=client,
 )

@@ -2,15 +2,15 @@ import logging
 
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
-from core.auth import get_auth0, get_current_user
-from core.db import SessionLocal
-from core.setup import retriever, client
-from core.config import get_settings
-from models.chat import Chat
-from models.message import Message, MessageSenderType
-from models.user import User
-from rag.ask import ask_llm
-from utils.utils import format_chat_history
+from app.core.auth import get_auth0, get_current_user
+from app.core.db import SessionLocal
+from app.core.setup import retriever, client
+from app.core.config import get_settings
+from app.models.chat import Chat
+from app.models.message import Message, MessageSenderType
+from app.models.user import User
+from app.rag.ask import ask_llm
+from app.utils.utils import format_chat_history
 
 logger = logging.getLogger(__name__)
 

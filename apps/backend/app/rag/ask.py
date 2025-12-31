@@ -1,8 +1,8 @@
 import logging
 
-from agents.tfsa_agent import TFSAAagent
-from schemas.chat import CalculationAnswer
-from rag.prompt import build_context, build_prompt
+from app.agents.tfsa_agent import TFSAAagent
+from app.schemas.chat import CalculationAnswer
+from app.rag.prompt import build_context, build_prompt
 
 logger = logging.getLogger(__name__)
 agent = TFSAAagent()

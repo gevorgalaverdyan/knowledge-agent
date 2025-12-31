@@ -3,8 +3,8 @@ import json
 import faiss
 import numpy as np
 
-from core.config import get_settings
-from utils.utils import chunk_text
+from app.core.config import get_settings
+from app.utils.utils import chunk_text
 
 def embed_batch(texts: list[str], client):
     response = client.models.embed_content(
@@ -64,7 +64,7 @@ def ingest(client):
     for record, vector in zip(records, embeddings):
         record["embedding"] = vector
 
-    with open("./embedding/tfsa_embeddings.json", "w", encoding="utf-8") as f:
+    with open("app/embedding/tfsa_embeddings.json", "w", encoding="utf-8") as f:
         json.dump(records, f, indent=2)
 
     print(f"Embedded and indexed {len(records)} chunks")
@@ -84,6 +84,6 @@ def ingest(client):
 
     print(f"FAISS index built with {index.ntotal} vectors")
 
-    faiss.write_index(index, "./embedding/tfsa.faiss")
+    faiss.write_index(index, "app/embedding/tfsa.faiss")
 
 

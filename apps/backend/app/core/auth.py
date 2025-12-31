@@ -4,10 +4,9 @@ from functools import lru_cache
 
 from fastapi import Depends
 from sqlalchemy.orm import Session
-from core.db import SessionLocal
-from core.setup import configure_auth0
-from models.user import User
-
+from app.core.db import SessionLocal
+from app.core.setup import configure_auth0
+from app.models.user import User
 
 def get_db():
     db = SessionLocal()

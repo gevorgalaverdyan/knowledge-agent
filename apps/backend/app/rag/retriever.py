@@ -1,9 +1,11 @@
-import faiss
 import json
-from rag.ingest import embed_query
 import logging
 
+import faiss
+from app.rag.ingest import embed_query
+
 logger = logging.getLogger(__name__)
+
 
 class FaissRetriever:
     def __init__(self, index_path: str, metadata_path: str, client):
@@ -23,8 +25,5 @@ class FaissRetriever:
         for score, idx in zip(scores[0], indices[0]):
             if idx == -1:
                 continue
-            results.append({
-                "score": float(score),
-                **self.metadata[idx]
-            })
+            results.append({"score": float(score), **self.metadata[idx]})
         return results

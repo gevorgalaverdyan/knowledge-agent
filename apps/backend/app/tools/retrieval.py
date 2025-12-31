@@ -1,7 +1,7 @@
 from typing import List
 
-from core.setup import retriever
-from schemas.chat import Section
+from app.core.setup import retriever
+from app.schemas.chat import Section
 
 def find_relevant_sections(query: str, top_k: int = 5) -> List[Section]:
     """

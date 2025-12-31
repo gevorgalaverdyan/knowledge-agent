@@ -1,6 +1,6 @@
 from datetime import date
 
-from schemas.chat import CalculationToolResult
+from app.schemas.chat import CalculationToolResult
 
 TFSA_LIMITS = {
     2009: 5000,

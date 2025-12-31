@@ -1,7 +1,7 @@
 import enum
 from sqlalchemy import UUID, Column, DateTime, ForeignKey, Text, func, Enum, text as sql_text
 from sqlalchemy.orm import relationship
-from core.db import Base
+from app.core.db import Base
 
 
 class MessageSenderType(enum.Enum):

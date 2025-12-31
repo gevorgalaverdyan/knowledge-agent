@@ -1,4 +1,4 @@
-from schemas.chat import ToolAnswer, Section
+from app.schemas.chat import ToolAnswer, Section
 
 
 def build_context(chunks):

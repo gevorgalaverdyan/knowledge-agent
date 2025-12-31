@@ -1,10 +1,10 @@
 import logging
 from contextlib import asynccontextmanager
 
-from api import router
-from core.auth import get_auth0
-from core.db import Base, engine
-from core.setup import create_app, setup_logging
+from .api import router
+from .core.auth import get_auth0
+from .core.db import Base, engine
+from .core.setup import create_app, setup_logging
 
 setup_logging(logging.INFO)
 logger = logging.getLogger(__name__)
