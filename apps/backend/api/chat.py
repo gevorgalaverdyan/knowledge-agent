@@ -2,12 +2,13 @@ import logging
 
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
-from core.auth import get_auth0
+from core.auth import get_auth0, get_current_user
 from core.db import SessionLocal
 from core.setup import retriever, client
 from core.config import get_settings
 from models.chat import Chat
 from models.message import Message, MessageSenderType
+from models.user import User
 from rag.ask import ask_llm
 from utils.utils import format_chat_history
 
@@ -27,15 +28,15 @@ def get_db():
 
 
 @router.get("/chats", description="Fetch all chat sessions")
-def get_chats(db: Session = Depends(get_db), _ = Depends(auth0.require_auth())):
-    chats = db.query(Chat).all()
+def get_chats(db: Session = Depends(get_db), current_user: User = Depends(get_current_user), _ = Depends(auth0.require_auth())):
+    chats = db.query(Chat).where(Chat.owner_id == current_user.id).all()
     return {"code": 200, "chats": chats}
 
 
 @router.post("/create", description="Create a new chat session")
-def create_chat(chat_title: str, db: Session = Depends(get_db), _ = Depends(auth0.require_auth())):
+def create_chat(chat_title: str, db: Session = Depends(get_db), current_user: User = Depends(get_current_user), _ = Depends(auth0.require_auth())):
     logger.info("Creating a new chat session.")
-    chat = Chat(chat_title=chat_title)
+    chat = Chat(chat_title=chat_title, owner_id=current_user.id)
     db.add(chat)
     db.commit()
     db.refresh(chat)
@@ -43,7 +44,7 @@ def create_chat(chat_title: str, db: Session = Depends(get_db), _ = Depends(auth
     return {"code": 201, "chat": chat}
 
 @router.delete("/{chat_id}/delete", description="Delete a chat session")
-def delete_chat(chat_id: str, db: Session = Depends(get_db), _ = Depends(auth0.require_auth())):
+def delete_chat(chat_id: str, db: Session = Depends(get_db), current_user: User = Depends(get_current_user), _ = Depends(auth0.require_auth())):
     logger.info("Deleting chat session with id: %s", chat_id)
     chat = db.query(Chat).filter(Chat.id == chat_id).first()
     if not chat:
