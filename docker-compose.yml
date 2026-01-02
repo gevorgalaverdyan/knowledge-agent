@@ -9,6 +9,34 @@ services:
     ports:
       - "5432:5432"
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+  
+  backend:
+    build: ./apps/backend
+    container_name: backend_service
+    ports:
+      - "8000:80"
+    env_file:
+      - ./apps/backend/.env
+    depends_on:
+      db:
+        condition: service_healthy
+
+  frontend:
+    build: ./apps/frontend
+    container_name: frontend_service
+    ports:
+      - "4200:8080"
+    depends_on:
+      - backend
+
+networks:
+  default:
+    driver: bridge
 
 volumes:
   db: {}

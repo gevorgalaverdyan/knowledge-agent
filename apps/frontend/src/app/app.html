@@ -26,7 +26,7 @@
             <z-content class="overflow-auto">
                 <div class="space-y-4">
                     <div class="flex items-center justify-between">
-                        <h1 class="text-lg font-bold">{{selectedChat() ? selectedChat()!.chat_title : ''}}</h1>
+                        <h1 class="text-lg font-bold">{{selectedChat() ? selectedChat()!.chat_title : 'New Chat'}}</h1>
                         <z-icon zType="circle-x" zSize="xl" class="text-red-200 cursor-pointer hover:text-red-400"
                             (click)="deleteChat(selectedChat() ? selectedChat()!.id : '')" />
                     </div>
