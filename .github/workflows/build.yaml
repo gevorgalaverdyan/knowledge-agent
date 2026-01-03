@@ -53,7 +53,7 @@ jobs:
 
       - name: Start server and Validate
         run: |
-          fastapi dev main.py & 
+          fastapi dev ./app/main.py & 
 
           sleep 5
 
