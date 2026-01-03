@@ -1,0 +1,18 @@
+# Local .terraform directories (contains binaries)
+**/.terraform/*
+
+# State files (contains secrets in plain text)
+*.tfstate
+*.tfstate.*
+
+# Variable files (contains your API keys)
+*.tfvars
+*.tfvars.json
+
+# Crash log files
+crash.log
+crash.*.log
+
+# Ignore CLI configuration files
+.terraformrc
+terraform.rc
